@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置BeanPostProcessor,在bean的init()方法前后调用 -->
+    <bean class="com.sj.spring.postProcessor.PostProcessor"/>
+
+    <!-- 调用静态方法要用T() -->
+    <bean class="com.sj.spring.spel.Car" name="newCar1"
+          init-method="myInit" destroy-method="myDestroy">
+        <property name="price" value="#{T(Math).abs(-1)}"/>
+        <property name="band" value="#{'spel表达式可使用运算符'}"/>
+        <property name="factory" value="#{'还调用别的对象方法'}"/>
+    </bean>
+    <bean class="com.sj.spring.spel.Car" name="newCar2">
+        <property name="band" value="#{('支持正则表达式' matches '[test]')}"/>
+        <property name="price" value="#{newCar1.price == 0 ? 1: 0}"/>
+    </bean>
+    <bean class="com.sj.spring.spel.Person" name="newPerson1">
+        <property name="car" value="#{newCar1}"/>
+        <property name="name" value="#{'可以返回别的bean'}"/>
+    </bean>
+
+
+</beans>

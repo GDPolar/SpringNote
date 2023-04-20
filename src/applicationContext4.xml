@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="car1FromFactory" class="com.sj.spring.beansFactory.CarFactory"
+          factory-method="getCar" >
+        <constructor-arg value="car1"/>
+        <property name="factory" value="配置通过工厂模式创建的实例bean,由constructor-arg设置参数"/>
+    </bean>
+
+
+    <bean name="carFactory" class="com.sj.spring.beansFactory.InstanceCarFactory"/>
+    <bean name="car2FromFactory" factory-bean="carFactory" factory-method="getCar">
+        <constructor-arg value="car2"/>
+        <property name="factory" value="创建工厂对象，再调用工厂的实例方法"/>
+    </bean>
+
+</beans>

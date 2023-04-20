@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean class="com.sj.spring.beans.HelloWorld" id="helloWorld1">
+        <constructor-arg value="构造器属性值" name="name"/>
+        <constructor-arg name="add">
+            <value><![CDATA[<特殊字符可用CDATA[]包裹>]]></value>
+        </constructor-arg>
+        <property name="name" value="普通属性值"/>
+    </bean>
+
+    <bean class="com.sj.spring.beans.Person" id="person1">
+        <property name="name" value="设置ref建立bean之间的引用关系"/>
+        <property name="mate" ref="person2"/>
+    </bean>
+
+    <bean class="com.sj.spring.beans.Person" id="person2" scope="prototype">
+        <property name="name" value="scope默认为singleton单例模式"/>
+    </bean>
+
+    <!-- 使用外部属性文件 -->
+    <context:property-placeholder location="test.properties"/>
+
+    <bean class="com.sj.spring.collections.House" id="house1">
+        <property name="area" value="${big}"/>
+    </bean>
+    <bean class="com.sj.spring.collections.House" id="house2">
+        <property name="area" value="${small}"/>
+    </bean>
+
+    <bean class="com.sj.spring.collections.Person" id="person3">
+        <property name="name" value="配置list属性和map属性"/>
+        <property name="cars">
+            <list>
+                <ref bean="car1"/>
+                <ref bean="car2"/>
+            </list>
+        </property>
+        <property name="houses">
+            <map>
+                <entry key="h1" value-ref="house1"/>
+                <entry key="h2" value-ref="house2"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="com.sj.spring.collections.Car" id="car1">
+        <property name="band" value="band1"/>
+    </bean>
+    <bean class="com.sj.spring.collections.Car" id="car2">
+        <property name="band" value="band2"/>
+    </bean>
+
+</beans>

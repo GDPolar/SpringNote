@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="car" class="com.sj.spring.autowire.Car" p:band="father" abstract="false"
+          p:factory="abstract属性即抽象类，当未为class属性赋值时，abstract必须为true" />
+    <bean id="address" class="com.sj.spring.autowire.Address" depends-on="car"
+          p:city="depends-on即依赖关系"/>
+    <bean id="person1" class="com.sj.spring.autowire.Person" autowire="byName"
+          p:name="autowire自动装箱属性为byName，则自动选择与类各setter相同的bean进行re赋值;
+                    byType不适用有多个相同类型的bean"/>
+    <bean id="car2" class="com.sj.spring.autowire.Car" parent="car"
+          p:factory="parent属性继承别的bean"/>
+</beans>
